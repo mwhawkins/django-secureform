@@ -1,7 +1,34 @@
 from django import forms
 from django.core.signing import Signer
 
+"""
+A secure implementation of the Django Form class.
+Validates a hash of proected (hidden) values against a signature created 
+with Django's own cryptographic signing system.
 
+Make sure the form_hash field is added to your templates if you are 
+creating forms manually.
+
+Usage:
+
+In forms.py:
+class MyForm(SecureForm):
+    name = forms.CharField(required=True, widget=forms.TextInput())
+    user_id = forms.IntegerField(required=True, widget=forms.HiddenInput())
+    ...
+    
+In views.py:
+form = MyForm(initial={'user_id': request.user.id})
+...then where you get POST data...
+form = MyForm(request.POST)
+if form.is_valid():
+    # do something...
+...and process the form as normal...
+    
+In template.html:
+{{ form }}
+...or to get the hash value manually: {{ form.form_hash }}
+"""
 class SecureForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
