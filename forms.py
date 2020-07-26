@@ -3,8 +3,11 @@ from django.core.signing import Signer
 
 """
 A secure implementation of the Django Form class.
-Validates a hash of proected (hidden) values against a signature created 
-with Django's own cryptographic signing system.
+Validates a hash of proected (hidden) initial values against a 
+signature created with Django's own cryptographic signing system.
+
+Useful for ensuring that hidden fields with initial data in forms 
+are not tampered with.
 
 Make sure the form_hash field is added to your templates if you are 
 creating forms manually.
